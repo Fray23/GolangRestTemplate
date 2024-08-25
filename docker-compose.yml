@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: always
+    command: "sleep 9999999"
+    ports:
+      - "20800:20800"
+    volumes:
+      - .:/code/
+    init: true
+networks:
+  default:
+    external:
+      name: work_network
+db:
+  image: postgres:16.4-alpine3.20
+  ports:
+    - "5433:5432"
+  volumes:
+    - ./pg_data:/var/lib/postgresql/data
+  environment:
+    POSTGRES_PORT: 5432
+    POSTGRES_USER: postgres
+    POSTGRES_PASSWORD: postgres
+    POSTGRES_DB: test
