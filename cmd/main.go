@@ -1,9 +1,10 @@
 package main
 
 import (
+	"log"
+
 	routes "code/api"
 	db "code/core/db"
-	"log"
 
 	"github.com/gin-gonic/gin"
 )
@@ -13,8 +14,6 @@ func setupDb() {
 	if err != nil {
 		log.Fatalf("Error initializing database: %v", err)
 	}
-
-	db.Migrate()
 }
 
 func main() {
