@@ -1,28 +1,25 @@
 package auth
 
 import (
-	"net/http"
-
 	dto "code/dto/api"
 	service "code/service"
 
 	"github.com/gin-gonic/gin"
 )
 
-func SignUpHandler(c *gin.Context) {
+func SignUpHandler(c *gin.Context) (*dto.SignUpResponse, error) {
 	var signUpData dto.SignUpDTO
 
 	if err := c.BindJSON(&signUpData); err != nil {
-		return
+		return nil, err
 	}
 	err := service.RegisterNewUser(&signUpData)
 	if err != nil {
-		c.JSON(http.StatusBadRequest, err)
-		return
+		return nil, err
 	}
 
-	c.JSON(http.StatusOK, dto.SignUpResponse{
+	return &dto.SignUpResponse{
 		Status: 0,
 		Message: "User created successfully!",
-	})
+	}, nil
 }

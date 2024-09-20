@@ -1,19 +1,14 @@
 package auth_errors
 
-import "fmt"
+import (
+	"errors"
+)
 
-type ClientError struct {
-	Message  string
-	Code     int
-	HttpCode int
-	extra    interface{}
-}
 
-func (e *ClientError) Error() string {
-	return fmt.Sprintf("Client Error: %s (Code: %d)", e.Message, e.Code)
-}
+var (
+	ErrNotFound       = errors.New("resource not found")
+	ErrInvalidInput   = errors.New("invalid input")
+	ErrInternalServer = errors.New("internal server error")
 
-// status codes
-const (
-	USER_ALREADY_REGISTERED = 10
+	UserAlreadyRegistered = errors.New("user already registered1")
 )
