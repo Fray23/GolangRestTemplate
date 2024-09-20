@@ -10,7 +10,3 @@ type SignUpResponse struct {
 	Message string `json:"message"`
 }
 
-type ResponseError struct {
-	Errors string `json:"errors"`
-}
-
