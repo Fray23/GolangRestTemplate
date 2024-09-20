@@ -1,7 +1,7 @@
 package auth
 
 import (
-	dto "code/dto/api"
+	dto "code/core/dto/api"
 	service "code/service"
 
 	"github.com/gin-gonic/gin"

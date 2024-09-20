@@ -1,7 +1,7 @@
 package user_repo
 
 import (
-	dto "code/dto"
+	dto "code/core/dto"
 	db_models "code/models"
 
 	"gorm.io/gorm"
@@ -15,10 +15,6 @@ type UserInterface interface {
 type UserRepository struct {
 	DB *gorm.DB
 }
-
-// func NewUserRepository(db *gorm.DB) UserRepository {
-// 	return &userRepository{db: db}
-// }
 
 func (r *UserRepository) GetUserByID(id uint) dto.UserRepositoryResult {
 	var user db_models.User
