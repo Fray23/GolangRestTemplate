@@ -8,6 +8,7 @@ This is a skeleton application built with Go, utilizing the following libraries:
 
 
 ## Project Structure
+
 ├── api                     # api
 │   ├── app.go              # register router group
 │   └── auth                # router for auth/signup
