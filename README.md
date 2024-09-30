@@ -30,8 +30,10 @@ This is a skeleton application built with Go, utilizing the following libraries:
 │   │   └── error.go
 │   ├── middleware
 │   │   └── error_wrapper.go
-│   └── security
-│       └── hash.go
+│   ├── security
+│   │   └── hash.go
+│   └── setting
+│       └── setting.go     # setup setting (port, database, ...)
 ├── docker-compose.yml
 ├── Dockerfile
 ├── go.mod
@@ -43,6 +45,20 @@ This is a skeleton application built with Go, utilizing the following libraries:
 │   └── user.go
 └── service                 # contains the business logic of the application
     └── auth.go
+
+```
+
+### setting file `src/settings.ini`
+```
+[app]
+JwtSecret=secret
+Port=20800
+
+[db]
+Host=database
+User=postgres
+Password=postgres
+Name=app
 
 ```
 
