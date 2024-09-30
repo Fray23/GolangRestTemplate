@@ -8,7 +8,7 @@ This is a skeleton application built with Go, utilizing the following libraries:
 
 
 ## Project Structure
-
+```
 ├── api                     # api
 │   ├── app.go              # register router group
 │   └── auth                # router for auth/signup
@@ -43,6 +43,8 @@ This is a skeleton application built with Go, utilizing the following libraries:
 │   └── user.go
 └── service                 # contains the business logic of the application
     └── auth.go
+
+```
 
 ### RUN migrations
 ```bash
