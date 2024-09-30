@@ -6,7 +6,6 @@ import (
 )
 
 func RegisterUserRoutes(rg *gin.RouterGroup) {
-	rg.GET("/login", LoginHandler)
+	rg.GET("/login", middleware.ErrorWrapper(LoginHandler))
 	rg.POST("/signup", middleware.ErrorWrapper(SignUpHandler))
-	
 }
