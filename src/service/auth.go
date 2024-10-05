@@ -7,7 +7,7 @@ import (
 	dto "code/core/dto/api"
 	auth_err "code/core/enum"
 	"code/core/security"
-	"code/models"
+	db_models "code/models"
 	repository "code/repository"
 )
 
@@ -33,19 +33,23 @@ func RegisterNewUser(signUpData *dto.SignUpDTO) error {
 	return nil
 }
 
-func AuthUser(loginData *dto.AuthDTO) error {
+func JwtAuthUser(loginData *dto.AuthDTO) (string, error) {
 	user_repository := repository.UserRepository{DB: db.DB}
 	operationResult := user_repository.GetUserByLogin(loginData.Login)
 
 	if operationResult.Error != nil {
-		return auth_err.UserNotFound
+		return "", auth_err.UserNotFound
 	}
 
 	user := operationResult.Result.(*db_models.User)
 
-	if security.CheckPasswordHash(loginData.Password, user.Password) {
-		return nil
-	} else {
-		return auth_err.InvalidPassword
+	if !security.CheckPasswordHash(loginData.Password, user.Password) {
+		return "", auth_err.InvalidPassword
 	}
+
+	token, err := security.GenerateJwtToken(user)
+	if err != nil {
+		return "", err
+	}
+	return token, nil
 }

@@ -7,5 +7,5 @@ import (
 )
 
 func RegisterRoutes(r *gin.Engine) {
-	auth.RegisterUserRoutes(r.Group("/users"))
+	auth.RegisterUserRoutes(r.Group("api/users"))
 }

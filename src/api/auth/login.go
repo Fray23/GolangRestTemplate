@@ -2,8 +2,9 @@ package auth
 
 import (
 	dto "code/core/dto/api"
-	"github.com/gin-gonic/gin"
 	"code/service"
+
+	"github.com/gin-gonic/gin"
 )
 
 func LoginHandler(c *gin.Context) (*dto.LoginResponse, error) {
@@ -12,13 +13,13 @@ func LoginHandler(c *gin.Context) (*dto.LoginResponse, error) {
 		return nil, err
 	}
 
-	err := service.AuthUser(&AuthData)
+	token, err := service.JwtAuthUser(&AuthData)
 	if err != nil {
 		return nil, err
 	}
 
 	return &dto.LoginResponse{
-		Status: 0,
-		Message: "auth",
+		Status:  0,
+		Message: token,
 	}, nil
 }
