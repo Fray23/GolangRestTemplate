@@ -64,7 +64,7 @@ Name=app
 
 ### RUN migrations
 ```bash
-goose postgres "postgres://postgres_username:password@localhost:5432/your_database_name?sslmode=disable" up
+goose postgres "postgres://postgres_username:password@localhost:5432/your_database_name?sslmode=disable" up -dir migrations/
 ```
 
 ### RUN project

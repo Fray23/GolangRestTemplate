@@ -15,20 +15,24 @@ type jwt_token string
 
 func RegisterNewUser(signUpData *dto.SignUpDTO) error {
 	user_repository := repository.UserRepository{DB: db.DB}
-	operationResult := user_repository.GetUserByLogin(signUpData.Login)
+	userAlreadyExists, err := user_repository.IsExistsByLogin(signUpData.Login)
+	if err != nil {
+		return fmt.Errorf("failed to check user is Exists: %w", err)
+	}
+
 	hash_password, err := security.HashPassword(signUpData.Password)
 	if err != nil {
 		return fmt.Errorf("failed to generate hash for password: %w", err)
 	}
 
-	if operationResult.Error == nil {
+	if userAlreadyExists {
 		return auth_err.UserAlreadyRegistered
-	} else {
-		_ = user_repository.CreateUser(
-			signUpData.Login,
-			hash_password,
-		)
 	}
+
+	_ = user_repository.CreateUser(
+		signUpData.Login,
+		hash_password,
+	)
 
 	return nil
 }

@@ -26,6 +26,19 @@ func (r *UserRepository) GetUserByID(id uint) dto.UserRepositoryResult {
 	return dto.UserRepositoryResult{Result: &user}
 }
 
+func (r *UserRepository) IsExistsByLogin(login string) (bool, error) {
+	user := &db_models.User{}
+	err := r.DB.Select("id").Where("login = ?", login).Limit(1).Find(user).Error
+	if err != nil {
+		return false, err
+	}
+
+	if (*user == db_models.User{}) {
+		return false, nil
+	}
+	return true, nil
+}
+
 func (r *UserRepository) GetUserByLogin(login string) dto.UserRepositoryResult {
 	var user db_models.User
 	err := r.DB.Where("login = ?", login).First(&user).Error
