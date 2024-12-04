@@ -1,11 +1,16 @@
 package routes
 
 import (
-	auth "code/api/auth"
+	"code/api/auth"
 
 	"github.com/gin-gonic/gin"
 )
 
 func RegisterRoutes(r *gin.Engine) {
-	auth.RegisterUserRoutes(r.Group("api/users"))
+	usersGroup := r.Group("api/users")
+
+	// ChangeMe
+	// someApiGroup.Use(middleware.JwtMiddleware())
+
+	auth.RegisterUserRoutes(usersGroup)
 }

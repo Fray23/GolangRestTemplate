@@ -1,6 +1,8 @@
 package security
 
 import (
+	"fmt"
+
 	db_models "code/models"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -19,4 +21,22 @@ func GenerateJwtToken(user *db_models.User) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func DecodeJwtToken(tokenString string) (map[string]interface{}, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return secretKey, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		return claims, nil
+	} else {
+		return nil, fmt.Errorf("invalid token")
+	}
 }
